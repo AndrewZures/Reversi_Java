@@ -29,15 +29,15 @@ public class ReversiBoard implements BoardInterface {
 
     }
 
-    public boolean makeMove(int index, int player){
-        if(validMove(index, player)){
-            boardArray[index] = player;
-            updateBoard(player);
+    public boolean makeMove(int move, int player){
+        if(validateChosenMove(move, player)){
+            boardArray[move] = player;
+            updateBoard(player, move);
             return true;
         } else return false;
     }
 
-    private boolean validMove(int index, int player){
+    private boolean validateChosenMove(int index, int player){
         if(indexIsOutOfBounds(index)){return false;}
         ArrayList<Integer> validMoves = this.getValidMoves(player);
         return validMoves.contains(index);
@@ -74,9 +74,7 @@ public class ReversiBoard implements BoardInterface {
 
     public int findMove(int index, int offset, int player){
         int nextIndex = index+offset;
-        if(indexIsOutOfBounds(nextIndex)){
-            return INVALIDMOVE;
-        }
+        if(indexIsOutOfBounds(nextIndex)){ return INVALIDMOVE; }
         else if(boardArray[nextIndex] == opponent(player)){
             return findMove(nextIndex, offset, player);   //recursive call on findMove
         }
@@ -86,12 +84,17 @@ public class ReversiBoard implements BoardInterface {
         else return INVALIDMOVE;
     }
 
-    public void updateBoard(int player){
-        ArrayList<Integer> playerPieces = findPlayerPieces(player);
+    public void updateBoard(int player, int move){
+        /*ArrayList<Integer> playerPieces = findPlayerPieces(player);
         int[] offset = getOffsets();
         for (Integer playerPiece : playerPieces) {
             for (int anOffset : offset) searchForUpdate(playerPiece, playerPiece, anOffset, player);
         }
+        */
+
+        int[] offsets = getOffsets();
+        for(int offset : offsets)
+            searchForUpdate(move,move,offset, player);
     }
 
     public int[] getOffsets(){
@@ -109,10 +112,14 @@ public class ReversiBoard implements BoardInterface {
                 return true;
             }
         }
-        else if(boardArray[nextIndex] == player && boardArray[nextIndex] != origIndex+offset){
+        else if(boardArray[nextIndex] == player && notNextToOriginalIndex(origIndex,offset,nextIndex)){
              return true;
         }
         return false;
+    }
+
+    public boolean notNextToOriginalIndex(int origIndex, int offset, int testIndex){
+        return boardArray[testIndex] != origIndex+offset;
     }
 
     public ArrayList<Integer> findPlayerPieces(int player){

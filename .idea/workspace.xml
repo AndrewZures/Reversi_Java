@@ -2,17 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9202a960-d58f-40e7-8926-7cd9625da7d8" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Reversi.java" afterPath="$PROJECT_DIR$/src/Reversi.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ReversiBoard.java" afterPath="$PROJECT_DIR$/src/ReversiBoard.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Reversi.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/ReversiBoard.java" changelist="9202a960-d58f-40e7-8926-7cd9625da7d8" time="1373066423045" ignored="false" />
+    <file path="/ReversiBoard.java" changelist="9202a960-d58f-40e7-8926-7cd9625da7d8" time="1373068506899" ignored="false" />
     <file path="/BoardInterface.java" changelist="9202a960-d58f-40e7-8926-7cd9625da7d8" time="1373059987882" ignored="false" />
     <file path="/Dummy.txt" changelist="9202a960-d58f-40e7-8926-7cd9625da7d8" time="1373066545482" ignored="false" />
     <file path="/fragment.java" changelist="9202a960-d58f-40e7-8926-7cd9625da7d8" time="1373052120967" ignored="false" />
     <file path="/ReversiBoardTest.java" changelist="9202a960-d58f-40e7-8926-7cd9625da7d8" time="1373066492799" ignored="false" />
-    <file path="/Reversi.java" changelist="9202a960-d58f-40e7-8926-7cd9625da7d8" time="1373059399810" ignored="false" />
+    <file path="/Reversi.java" changelist="9202a960-d58f-40e7-8926-7cd9625da7d8" time="1373067779755" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,19 +87,19 @@
           <file leaf-file-name="Reversi.java" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Reversi.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="3" column="25" selection-start="57" selection-end="57" vertical-scroll-proportion="0.0">
+                <state line="3" column="38" selection-start="82" selection-end="82" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ReversiBoard.java" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="ReversiBoard.java" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/ReversiBoard.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="144" column="37" selection-start="4569" selection-end="4569" vertical-scroll-proportion="2.011236">
+                <state line="81" column="44" selection-start="2563" selection-end="2563" vertical-scroll-proportion="0.2859304">
                   <folding>
-                    <element signature="e#1555#1564#0" expanded="true" />
-                    <element signature="e#3783#3792#0" expanded="true" />
+                    <element signature="e#1576#1585#0" expanded="true" />
+                    <element signature="e#4094#4103#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -109,10 +109,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="ReversiBoardTest.java" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="ReversiBoardTest.java" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/ReversiBoardTest.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="121" column="43" selection-start="3491" selection-end="3491" vertical-scroll-proportion="0.8103933">
+                <state line="122" column="48" selection-start="3497" selection-end="3497" vertical-scroll-proportion="0.8103933">
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#1476#1485#0" expanded="true" />
@@ -145,10 +145,10 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/ReversiBoardTestTest.java" />
-        <option value="$PROJECT_DIR$/src/Reversi.java" />
         <option value="$PROJECT_DIR$/src/BoardInterface.java" />
-        <option value="$PROJECT_DIR$/src/ReversiBoard.java" />
         <option value="$PROJECT_DIR$/src/ReversiBoardTest.java" />
+        <option value="$PROJECT_DIR$/src/Reversi.java" />
+        <option value="$PROJECT_DIR$/src/ReversiBoard.java" />
       </list>
     </option>
   </component>
@@ -249,7 +249,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ReversiBoardTest.opponent">
+  <component name="RunManager" selected="Application.Reversi">
     <configuration default="false" name="ReversiBoardTest.setUp" type="TestNG" factoryName="TestNG" temporary="true">
       <module name="Reversi" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -458,10 +458,10 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.ReversiBoardTest.opponent" />
+        <item index="0" class="java.lang.String" itemvalue="Application.Reversi" />
         <item index="1" class="java.lang.String" itemvalue="JUnit.ReversiBoardTest" />
-        <item index="2" class="java.lang.String" itemvalue="Application.Reversi" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.ReversiBoardTest.setUp" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.ReversiBoardTest.setUp" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.ReversiBoardTest.opponent" />
         <item index="4" class="java.lang.String" itemvalue="TestNG.ReversiBoardTest.setUp" />
       </list>
     </recent_temporary>
@@ -628,8 +628,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="44" selection-start="263" selection-end="263" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#1555#1564#0" expanded="true" />
-            <element signature="e#3783#3792#0" expanded="true" />
+            <element signature="e#1576#1585#0" expanded="true" />
+            <element signature="e#4094#4103#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -652,8 +652,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="41" column="11" selection-start="1065" selection-end="1065" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#1555#1564#0" expanded="true" />
-            <element signature="e#3783#3792#0" expanded="true" />
+            <element signature="e#1576#1585#0" expanded="true" />
+            <element signature="e#4094#4103#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -676,8 +676,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="41" column="11" selection-start="1065" selection-end="1065" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#1555#1564#0" expanded="true" />
-            <element signature="e#3783#3792#0" expanded="true" />
+            <element signature="e#1576#1585#0" expanded="true" />
+            <element signature="e#4094#4103#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -700,8 +700,21 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="36" selection-start="912" selection-end="912" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#1555#1564#0" expanded="true" />
-            <element signature="e#3783#3792#0" expanded="true" />
+            <element signature="e#1576#1585#0" expanded="true" />
+            <element signature="e#4094#4103#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ReversiBoardTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="122" column="48" selection-start="3497" selection-end="3497" vertical-scroll-proportion="0.8103933">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1476#1485#0" expanded="true" />
+            <element signature="e#1542#1551#0" expanded="true" />
+            <element signature="e#1922#1931#0" expanded="true" />
+            <element signature="e#2216#2225#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -715,30 +728,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Reversi.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="25" selection-start="57" selection-end="57" vertical-scroll-proportion="0.0">
+        <state line="3" column="38" selection-start="82" selection-end="82" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ReversiBoard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="144" column="37" selection-start="4569" selection-end="4569" vertical-scroll-proportion="2.011236">
+        <state line="81" column="44" selection-start="2563" selection-end="2563" vertical-scroll-proportion="0.2859304">
           <folding>
-            <element signature="e#1555#1564#0" expanded="true" />
-            <element signature="e#3783#3792#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ReversiBoardTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="121" column="43" selection-start="3491" selection-end="3491" vertical-scroll-proportion="0.8103933">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1476#1485#0" expanded="true" />
-            <element signature="e#1542#1551#0" expanded="true" />
-            <element signature="e#1922#1931#0" expanded="true" />
-            <element signature="e#2216#2225#0" expanded="true" />
+            <element signature="e#1576#1585#0" expanded="true" />
+            <element signature="e#4094#4103#0" expanded="true" />
           </folding>
         </state>
       </provider>
