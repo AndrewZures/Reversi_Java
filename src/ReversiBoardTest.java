@@ -116,4 +116,10 @@ public class ReversiBoardTest {
         assertEquals(2, boardArray[44]);
     }
 
+    @Test
+    public void opponent(){
+        assertEquals(2, board.opponent(1));
+        assertEquals(1, board.opponent(2));
+    }
+
 }
