@@ -1,100 +1,154 @@
+import java.util.ArrayList;
 
 public class ReversiBoard implements BoardInterface {
+    private static int OPEN = 0;
+    private static int MININDEX = 0;
+    private static int PLAYER1 = 1;
+    private static int PLAYER2 = 2;
+
     private int[] boardArray = null;
 
     public ReversiBoard(){
         boardArray = new int[64];
-        this.setupBoard();
+        this.initializeBoard();
         this.setInitialPieces();
     }
 
-    private void setupBoard(){
+    private void initializeBoard(){
         for(int i = 0; i < boardArray.length; i++){
-            boardArray[i] = 0;
+            boardArray[i] = OPEN;
         }
     }
 
     private void setInitialPieces(){
-          boardArray[27] = 1;
-          boardArray[28] = 2;
-          boardArray[35] = 2;
-          boardArray[36] = 1;
+      boardArray[27] = PLAYER1;
+      boardArray[36] = PLAYER1;
+      boardArray[28] = PLAYER2;
+      boardArray[35] = PLAYER2;
+
     }
 
     public boolean makeMove(int index, int player){
-        if(index < 0 || index >= boardArray.length){return false;}
-
-        if(boardArray[index] != 0){
+        if(validMove(index, player)){
             boardArray[index] = player;
+            updateBoard(player);
             return true;
-        }
-        else return false;
+        } else return false;
+    }
+
+    private boolean validMove(int index, int player){
+        if(indexIsOutOfBounds(index)){return false;}
+
+        ArrayList<Integer> validMoves = this.getValidMoves(player);
+        return validMoves.contains(index);
+    }
+
+    public boolean indexIsOutOfBounds(int index){
+        return index < MININDEX || index >= boardArray.length;
     }
 
     public int[] getBoard(){
         return boardArray;
     }
 
-    private int[] getValidMoves(int player){
-        int[] playerPieces = findPlayersPieces(player);
-        for(int i = 0; i < playerPieces.length; i++){
-            findAvailableMoves(playerPieces[i], player);
+    public ArrayList<Integer> getValidMoves(int player){
+        ArrayList<Integer> playerPieces = findPlayerPieces(player);
+        ArrayList<Integer> legalMoves = new ArrayList<Integer>();
+        for (Integer playerPiece : playerPieces) {
+            legalMoves = findLegalMoves(playerPiece, player, legalMoves);
         }
+        return legalMoves;
     }
 
-    private int[] findAvailableMoves(int index, int player){
-        int[] offset = {1,-1,-8,8,-9,-7,7,9};
-        int[] results = new int[8];
-        int k = 0;
-        int result;
-        for(int i = 0; i < offset.length; i++){
-           if((result = findMove(index, offset[i], player)) != 0){
-               results[k] = result;
-               k++;
+    public ArrayList<Integer> findLegalMoves(int index, int player, ArrayList<Integer> moves){
+        int[] offset = getOffsets();
+
+        for (int anOffset : offset) {
+            int result = findMove(index, anOffset, player);
+            if (result != -1 && result != index + anOffset && !moves.contains(result)) {
+                moves.add(result);
             }
         }
-        return results;
+        return moves;
     }
 
-    private int findMove(int index, int offset, int player){
+    public int findMove(int index, int offset, int player){
         int testIndex = index+offset;
-        if(boardArray[testIndex] < 0 || boardArray[testIndex] >= boardArray.length){
-            return 0;
+        if(indexIsOutOfBounds(index)){
+            return -1;
         }
-        if(boardArray[testIndex] != 0 && boardArray[testIndex] != player){
-            return findMove(testIndex, offset, player);
+        else if(boardArray[testIndex] == opponent(player)){
+            return findMove(testIndex, offset, player);   //recursive call on findMove
         }
-        else if(boardArray[testIndex] == player){
-            return 0;
+        else if (boardArray[testIndex] == OPEN){
+            return testIndex;
         }
-        else if (boardArray[testIndex] == 0){
-            if(testIndex == index+offset){
-                return 0;
-            }
-            else return testIndex;
-        }
-         return 0;
+        else return -1;
     }
 
-    private int[] findPlayersPieces(int player){
-        int k = 0;
-        int[] temp = new int[64];
+    public void updateBoard(int player){
+        ArrayList<Integer> playerPieces = findPlayerPieces(player);
+        int[] offset = getOffsets();
+        for (Integer playerPiece : playerPieces) {
+            for (int anOffset : offset) searchForUpdate(playerPiece, playerPiece, anOffset, player);
+        }
+    }
+
+    public int[] getOffsets(){
+        return new int[]{1, -1, -8, 8, 9, -9, 7, -7};
+    }
+
+    public boolean searchForUpdate(int origIndex, int currIndex, int offset, int player){
+       int testIndex = currIndex + offset;
+        if(indexIsOutOfBounds(testIndex) || boardArray[testIndex] == OPEN){return false;}
+
+        if(boardArray[testIndex] == opponent(player)){
+            boolean update = searchForUpdate(origIndex, testIndex, offset, player);
+            if(update){
+                boardArray[testIndex] = player;
+                return true;
+            }
+        }
+        else if(boardArray[testIndex] == player && boardArray[testIndex] != origIndex+offset){
+             return true;
+        }
+        return false;
+    }
+
+    public ArrayList<Integer> findPlayerPieces(int player){
+        ArrayList<Integer> playerPieces = new ArrayList<Integer>();
         for(int i = 0; i < boardArray.length; i++){
             if(boardArray[i] == player){
-                temp[k] = i;
-                k++;
+                 playerPieces.add(i);
             }
-        }
-
-        int[] playerPieces = new int[k-1];
-        for (int i = 0; i < k; i++){
-             playerPieces[i] = temp[i];
         }
         return playerPieces;
     }
 
-    public int checkGameState(){
+    public boolean checkGameState(){
         //TODO: check if there is a winner, tie, or continue_game
-        return 0;
+        ArrayList<Integer> player1Moves = getValidMoves(PLAYER1);
+        ArrayList<Integer> player2Moves = getValidMoves(PLAYER2);
+        return player1Moves.isEmpty() && player2Moves.isEmpty();
+    }
+
+    public int opponent(int player){
+        if(player == PLAYER1){return PLAYER2;}
+        else return PLAYER1;
+    }
+
+    public void printBoard(){
+        int[] boardArray = this.getBoard();
+        for(int i = 0; i < 64; i++){
+            if(String.valueOf(boardArray[i]).length() == 1){
+                System.out.print(boardArray[i]+"  ");
+            }
+            else if(String.valueOf(boardArray[i]).length() > 1){
+                System.out.print(boardArray[i]+" ");
+            }
+            if((i+1)%8 == 0){
+                System.out.println("");
+            }
+        }
     }
 }
