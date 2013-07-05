@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 
 public class ReversiBoard implements BoardInterface {
-    private static int OPEN = 0;
-    private static int MININDEX = 0;
-    private static int PLAYER1 = 1;
-    private static int PLAYER2 = 2;
+    private final int OPEN = 0;
+    private final int MININDEX = 0;
+    private final int PLAYER1 = 1;
+    private final int PLAYER2 = 2;
+    private final int INVALIDMOVE = -1;
 
     private int[] boardArray = null;
 
@@ -38,7 +39,6 @@ public class ReversiBoard implements BoardInterface {
 
     private boolean validMove(int index, int player){
         if(indexIsOutOfBounds(index)){return false;}
-
         ArrayList<Integer> validMoves = this.getValidMoves(player);
         return validMoves.contains(index);
     }
@@ -64,26 +64,26 @@ public class ReversiBoard implements BoardInterface {
         int[] offset = getOffsets();
 
         for (int anOffset : offset) {
-            int result = findMove(index, anOffset, player);
-            if (result != -1 && result != index + anOffset && !moves.contains(result)) {
-                moves.add(result);
+            int move = findMove(index, anOffset, player);
+            if (move != INVALIDMOVE && move != index + anOffset && !moves.contains(move)) {
+                moves.add(move);
             }
         }
         return moves;
     }
 
     public int findMove(int index, int offset, int player){
-        int testIndex = index+offset;
-        if(indexIsOutOfBounds(index)){
-            return -1;
+        int nextIndex = index+offset;
+        if(indexIsOutOfBounds(nextIndex)){
+            return INVALIDMOVE;
         }
-        else if(boardArray[testIndex] == opponent(player)){
-            return findMove(testIndex, offset, player);   //recursive call on findMove
+        else if(boardArray[nextIndex] == opponent(player)){
+            return findMove(nextIndex, offset, player);   //recursive call on findMove
         }
-        else if (boardArray[testIndex] == OPEN){
-            return testIndex;
+        else if (boardArray[nextIndex] == OPEN){
+            return nextIndex;
         }
-        else return -1;
+        else return INVALIDMOVE;
     }
 
     public void updateBoard(int player){
@@ -99,17 +99,17 @@ public class ReversiBoard implements BoardInterface {
     }
 
     public boolean searchForUpdate(int origIndex, int currIndex, int offset, int player){
-       int testIndex = currIndex + offset;
-        if(indexIsOutOfBounds(testIndex) || boardArray[testIndex] == OPEN){return false;}
+       int nextIndex = currIndex + offset;
+        if(indexIsOutOfBounds(nextIndex) || boardArray[nextIndex] == OPEN){return false;}
 
-        if(boardArray[testIndex] == opponent(player)){
-            boolean update = searchForUpdate(origIndex, testIndex, offset, player);
+        if(boardArray[nextIndex] == opponent(player)){
+            boolean update = searchForUpdate(origIndex, nextIndex, offset, player);
             if(update){
-                boardArray[testIndex] = player;
+                boardArray[nextIndex] = player;
                 return true;
             }
         }
-        else if(boardArray[testIndex] == player && boardArray[testIndex] != origIndex+offset){
+        else if(boardArray[nextIndex] == player && boardArray[nextIndex] != origIndex+offset){
              return true;
         }
         return false;
@@ -132,9 +132,16 @@ public class ReversiBoard implements BoardInterface {
         return player1Moves.isEmpty() && player2Moves.isEmpty();
     }
 
+    public int getScore(int player){
+        int score = 0;
+        for(int piece : boardArray){
+            if(piece == player){ score++;}
+        }
+        return score;
+    }
+
     public int opponent(int player){
-        if(player == PLAYER1){return PLAYER2;}
-        else return PLAYER1;
+        return player == PLAYER1 ? PLAYER2 : PLAYER1;
     }
 
     public void printBoard(){
