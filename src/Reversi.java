@@ -8,13 +8,21 @@ public class Reversi {
         Scanner sc = new Scanner(System.in);
 
         for(int j = 0; j < 10; j++){
-            board1.printBoard();
+            getStatus(board1, 1);
             board1.makeMove(sc.nextInt(), 1);
-            board1.printBoard();
+
+            getStatus(board1, 2);
             board1.makeMove(sc.nextInt(), 2);
         }
         board1.printBoard();
 
+    }
+
+    public static void getStatus(BoardInterface board, int player){
+        board.printBoard();
+        System.out.println("Player1: " + board.getScore(1) + " Player2: " + board.getScore(2));
+        System.out.print("Valid Moves: " + board.getValidMoves(player));
+        System.out.println("");
     }
 
     public Reversi(){
