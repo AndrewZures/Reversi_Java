@@ -1,10 +1,11 @@
 import org.junit.Test;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import static org.testng.AssertJUnit.assertEquals;
 
 public class ReversiBoardTest {
     ReversiBoard board = new ReversiBoard();
-
 
     @Test
     public void setUp() throws Exception {
@@ -59,17 +60,24 @@ public class ReversiBoardTest {
         assertEquals(correctList, board.findLegalMoves(27, 1, testList));
         correctList.add(34);
         correctList.add(20);
-        assertEquals(correctList, board.findLegalMoves(36, 1, testList));
+        Collections.sort(correctList);
+        ArrayList<Integer> results = board.findLegalMoves(36, 1, testList);
+        Collections.sort(results);
+        assertEquals(correctList, results);
     }
 
     @Test
     public void getValidMoves(){
         ArrayList<Integer>correctList = new ArrayList<Integer>();
-        correctList.add(29);
-        correctList.add(43);
-        correctList.add(34);
         correctList.add(20);
-        assertEquals(correctList, board.getValidMoves(1));
+        correctList.add(29);
+        correctList.add(34);
+        correctList.add(43);
+
+        Collections.sort(correctList);
+        ArrayList<Integer> results = board.getValidMoves(1);
+        Collections.sort(results);
+        assertEquals(correctList, results);
     }
 
     @Test
@@ -82,8 +90,8 @@ public class ReversiBoardTest {
 
     @Test
     public void makeMove(){
-        assertEquals(true, board.makeMove(29,1));
-        assertEquals(false, board.makeMove(45,1));
+        assertEquals(true, board.makeMove(29, 1));
+        assertEquals(false, board.makeMove(45, 1));
     }
 
     @Test
