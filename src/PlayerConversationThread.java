@@ -2,18 +2,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
 public class PlayerConversationThread extends Thread {
     Socket socket;
+    ReversiServer server;
     ReversiBoard board;
-    int idNumber;
+    int playerNum;
+    String player;
 
-    public PlayerConversationThread(Socket socket, ReversiBoard board, int idNumber){
+    public PlayerConversationThread(Socket socket, ReversiServer server, ReversiBoard board, String player, int playerNum){
         this.socket = socket;
         this.board = board;
-        this.idNumber =idNumber;
+        this.player = player;
+        this.playerNum = playerNum;
+        this.server = server;
     }
 
     public void run(){
@@ -27,7 +32,6 @@ public class PlayerConversationThread extends Thread {
         } catch (IOException e) {
             System.out.println("error occurred setting up i/o streams");
             System.out.println(e);
-            // e.printStackTrace();
         }
 
         try{
@@ -37,7 +41,7 @@ public class PlayerConversationThread extends Thread {
                 out.println(reply);
             }
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
     }
 
@@ -47,21 +51,42 @@ public class PlayerConversationThread extends Thread {
         String action = tokenizer.nextToken();
 
         if(action.equalsIgnoreCase("makemove")){
-            int move = Integer.valueOf(tokenizer.nextToken());
-            boolean moveAccepted = board.makeMove(move, idNumber);
-            if(moveAccepted) reply = "move accepted";
-            else reply = "invalid move, try again";
+            try{
+                int move = Integer.valueOf(tokenizer.nextToken());
+                boolean moveAccepted = board.makeMove(move, playerNum);
+                if(moveAccepted){
+                reply = "move accepted";
+                }
+                else reply = "invalid move, try again";
+            }
+            catch (NumberFormatException nfe){
+                reply = "invalid move, try again";
+            }
         }
 
+        if(action.equalsIgnoreCase("g"))
+            reply = player;
 
-        if(action.equalsIgnoreCase("printboard")){
+        if(action.equalsIgnoreCase("p"))
            reply = board.getBoardString();
+
+        if(action.equalsIgnoreCase("v"))
+            reply = ""+board.getValidMoves(playerNum);
+
+        if(action.equalsIgnoreCase("l"))
+            reply = ""+board.getCurrentPlayer();
+
+        if(action.equalsIgnoreCase("myturn?")){
+            boolean result = board.myTurn(playerNum);
+            if(result) reply = "yes";
+            else reply = "no";
         }
 
-        if(action.equalsIgnoreCase("getvalidmoves")){
-            reply = "validmoves, "+board.getValidMoves(idNumber);
+        if(action.equalsIgnoreCase("s")){
+            reply = board.getScoreString();
         }
 
         return reply;
     }
+
 }

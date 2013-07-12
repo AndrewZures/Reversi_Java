@@ -4,13 +4,13 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class ReversiServer {
     private static final int PORT = 8189;
     private ServerSocket serverSocket;
     private ReversiBoard board;
-
+    ArrayList<Thread> threadArray = new ArrayList<Thread>();
     ReversiServer(ReversiBoard board){
         this.board = board;
     }
@@ -25,7 +25,7 @@ public class ReversiServer {
             System.err.println("Error starting server on port " + PORT);
             System.out.println(ioe);
         }
-        int count = 0;
+        int count = 1;
         while (true){
             try{
                 s = serverSocket.accept();
@@ -35,7 +35,9 @@ public class ReversiServer {
                 System.out.println(ioe);
                 continue;
             }
-            Thread t = new PlayerConversationThread(s, board, count);
+            String player = getPlayer(count);
+            Thread t = new PlayerConversationThread(s, this, board, player, count);
+            threadArray.add(t);
             t.start();
             count++;
         }
@@ -46,5 +48,12 @@ public class ReversiServer {
         new ReversiServer(new ReversiBoard()).go();
         System.out.println("Server Shutting Down");
     }
+
+    public String getPlayer(int count){
+        if(count == 1) return "Player1 (@)";
+        else if(count == 2) return "Player2 (_)";
+        else return "Observer";
+    }
+
 
 }
