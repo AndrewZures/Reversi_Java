@@ -10,7 +10,6 @@ public class ReversiBoard implements BoardInterface {
 
     private boolean gameOn = true;
     private int currentPlayer = 1;
-    private int update = 0;
     private int[] boardArray = null;
 
     public ReversiBoard(){
@@ -42,8 +41,6 @@ public class ReversiBoard implements BoardInterface {
 
     public int[] getBoard(){ return boardArray; }
 
-    public int getUpdate(){ return update; }
-
     public String getCurrentPlayer() {
         if(currentPlayer == 1) return "Player1";
         else {
@@ -67,7 +64,6 @@ public class ReversiBoard implements BoardInterface {
             boardArray[move] = player;
             updateBoard(player, move);
             currentPlayer = opponent(player);
-            update++;
             return true;
         } else return false;
     }
@@ -164,15 +160,4 @@ public class ReversiBoard implements BoardInterface {
         return player == PLAYER1 ? PLAYER2 : PLAYER1;
     }
 
-    public void printBoard(){
-        int[] boardArray = this.getBoard();
-        for(int i = 0; i < 64; i++){
-            if(String.valueOf(boardArray[i]).length() == 1)
-                System.out.print(boardArray[i]+"  ");
-            else if(String.valueOf(boardArray[i]).length() > 1)
-                System.out.print(boardArray[i]+" ");
-
-            if((i+1)%8 == 0) System.out.println("");
-        }
-    }
 }
