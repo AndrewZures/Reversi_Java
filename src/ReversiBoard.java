@@ -2,13 +2,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+
 public class ReversiBoard implements BoardInterface {
     private final int OPEN = 0;
     private final int INVALIDMOVE = -1;
     private final int PLAYER1 = 1;
     private final int PLAYER2 = 2;
 
+    private int newPlayerCounter = 0;
     private boolean gameOn = true;
+    private boolean exitStatus = false;
     private int currentPlayer = 1;
     private int[] boardArray = null;
 
@@ -29,15 +32,17 @@ public class ReversiBoard implements BoardInterface {
       boardArray[35] = PLAYER2;
     }
 
-    public boolean resetBoard(){
-        if(!gameOn){
-            this.initializeBoard();
-            this.setInitialPieces();
-            return true;
-        }
-        else return false;
+    public void resetGame(){
+        this.resetBoard();
+        this.setInitialPieces();
+        currentPlayer = 1;
+        this.gameOn = true;
     }
 
+    public void resetBoard(){
+        this.initializeBoard();
+        this.setInitialPieces();
+    }
 
     public int[] getBoard(){ return boardArray; }
 
@@ -46,6 +51,10 @@ public class ReversiBoard implements BoardInterface {
         else {
             return "Player2";
         }
+    }
+
+    public int getNewPlayer(){
+        return ++newPlayerCounter;
     }
 
     public String getScoreString(){
@@ -57,6 +66,10 @@ public class ReversiBoard implements BoardInterface {
         else return false;
     }
 
+    public void passTurn(){
+        currentPlayer = opponent(currentPlayer);
+    }
+
     public String getBoardString(){return Arrays.toString(boardArray);}
 
     public boolean makeMove(int move, int player){
@@ -64,6 +77,7 @@ public class ReversiBoard implements BoardInterface {
             boardArray[move] = player;
             updateBoard(player, move);
             currentPlayer = opponent(player);
+            checkGameState();
             return true;
         } else return false;
     }
@@ -140,7 +154,6 @@ public class ReversiBoard implements BoardInterface {
     }
 
     public int checkGameState(){
-        //TODO: check if there is a winner, tie, or continue_game
         ArrayList<Integer> player1Moves = getValidMoves(PLAYER1);
         ArrayList<Integer> player2Moves = getValidMoves(PLAYER2);
         if(player1Moves.isEmpty() && player2Moves.isEmpty()){
@@ -148,6 +161,30 @@ public class ReversiBoard implements BoardInterface {
             return 0;
         }
         else return 1;
+    }
+
+    public int getWinner(){
+        int player1Score = getScore(1);
+        int player2Score = getScore(2);
+        if(player1Score > player2Score) return 1;
+        if(player2Score > player1Score) return 2;
+        else return 3;
+    }
+
+    public String getWinnerString(){
+        int winner = getWinner();
+        if(winner == 1)
+            return "Player 1 Wins!";
+        else if(winner == 2)
+            return "Player 2 Wins!";
+        else return "Tie";
+    }
+
+    public String getGameStateString(){
+        if(checkGameState() == 1){
+            return "gameOn";
+        }
+        else return "gameOver";
     }
 
     public int getScore(int player){
@@ -158,6 +195,12 @@ public class ReversiBoard implements BoardInterface {
 
     public int opponent(int player){
         return player == PLAYER1 ? PLAYER2 : PLAYER1;
+    }
+
+    public String getPlayerString(int count){
+        if(count == 1) return "Player1 (@)";
+        else if(count == 2) return "Player2 (_)";
+        else return "Observer";
     }
 
 }

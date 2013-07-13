@@ -25,7 +25,7 @@ public class ReversiServer {
             System.err.println("Error starting server on port " + PORT);
             System.out.println(ioe);
         }
-        int count = 1;
+
         while (true){
             try{
                 s = serverSocket.accept();
@@ -35,11 +35,9 @@ public class ReversiServer {
                 System.out.println(ioe);
                 continue;
             }
-            String player = getPlayer(count);
-            Thread t = new PlayerConversationThread(s, this, board, player, count);
+            Thread t = new PlayerConversationThread(s, this, board);
             threadArray.add(t);
             t.start();
-            count++;
         }
     }
 
@@ -49,11 +47,6 @@ public class ReversiServer {
         System.out.println("Server Shutting Down");
     }
 
-    public String getPlayer(int count){
-        if(count == 1) return "Player1 (@)";
-        else if(count == 2) return "Player2 (_)";
-        else return "Observer";
-    }
 
 
 }

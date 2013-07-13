@@ -13,11 +13,11 @@ public class PlayerConversationThread extends Thread {
     int playerNum;
     String player;
 
-    public PlayerConversationThread(Socket socket, ReversiServer server, ReversiBoard board, String player, int playerNum){
+    public PlayerConversationThread(Socket socket, ReversiServer server, ReversiBoard board){
         this.socket = socket;
         this.board = board;
-        this.player = player;
-        this.playerNum = playerNum;
+        this.playerNum = board.getNewPlayer();
+        this.player = board.getPlayerString(playerNum);
         this.server = server;
     }
 
@@ -84,6 +84,23 @@ public class PlayerConversationThread extends Thread {
 
         if(action.equalsIgnoreCase("s")){
             reply = board.getScoreString();
+        }
+
+        if(action.equalsIgnoreCase("w")){
+            reply = board.getWinnerString();
+        }
+
+        if(action.equalsIgnoreCase("gamestate")){
+            reply = board.getGameStateString();
+        }
+
+        if(action.equalsIgnoreCase("a")){
+            board.passTurn();
+            reply = "Turn Passed";
+        }
+
+        if(action.equalsIgnoreCase("rest")){
+            this.board.resetGame();
         }
 
         return reply;

@@ -130,4 +130,15 @@ public class ReversiBoardTest {
         assertEquals(1, board.opponent(2));
     }
 
+    @Test
+    public void checkGameState(){
+        assertEquals(0, board.checkGameState());
+    }
+
+    @Test
+    public void checkGameState2(){
+        board.resetGame();
+        assertEquals(64, board.getBoard().length);
+    }
+
 }
